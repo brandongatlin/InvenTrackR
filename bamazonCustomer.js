@@ -5,7 +5,7 @@ var inquirer = require("inquirer");
 var item;
 var price;
 var id;
-var storeQuantity;
+var stockQuantity;
 var chosenQuantity;
 
 //sql login info
@@ -39,11 +39,12 @@ function display() {
       id = results[i].item_id;
       item = results[i].product_name;
       price = results[i].price;
-      storeQuantity = results[i].stock_quantity;
+      stockQuantity = results[i].stock_quantity;
+      //when a user makes a selects a quantity, the program always compares to stock from the last item in teh loop, item 10. Therefore I need to find a way to compare to the exact item chosen?
 
-      // console.log("loop storeQuantity: ", storeQuantity);
+      console.log("loop stockQuantity: ", stockQuantity);
 
-      console.log("id:" + id + ",", item, "$" + price, "in stock: " + storeQuantity);
+      console.log("id:" + id + ",", item, "$" + price, "in stock: " + stockQuantity);
     }
 
     // once you have the items, prompt the user for which they'd like to bid on
@@ -72,11 +73,14 @@ function display() {
       }]).then(function(answer) {
         // console.log(answer);
         chosenQuantity = answer.quantity_choice;
+        console.log(item);
 
         // console.log("chosen quantity: ", chosenQuantity);
-        // console.log("store quantity: ", storeQuantity);
-        if (chosenQuantity > storeQuantity) {
+        // console.log("store quantity: ", stockQuantity);
+        if (chosenQuantity > stockQuantity) {
           console.log("oops, not enough in stock.");
+          console.log("id:" + id + ",", item, "$" + price, "in stock: " + stockQuantity);
+
           inquirer.prompt([{
             name: "restart",
             type: "confirm",
@@ -89,8 +93,23 @@ function display() {
               console.log("Thanks for shopping with us at Bamazon!");
             }
           });
+        } else {
+          console.log('yep, we got enough!');
+          //subtract quantity from stock & add up total
+          //updateQuantity();
+          // console.log("Your total is: $" + x);
+
         }
       });
     });
   });
 } // end display function
+
+//update function
+function updateQuantity() {
+
+  connection.query("UPDATE products SET stockQuantity WHERE", function(err, results) {
+    if (err) throw err;
+  });
+
+}
