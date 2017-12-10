@@ -34,18 +34,29 @@ function display() {
     console.log(results);
 
     // once you have the items, prompt the user for which they'd like to bid on
-    inquirer
-      .prompt([{
-        name: "item_choice",
+    inquirer.prompt([{
+      name: "item_choice",
+      type: "input",
+      message: "Which item would you like to purchase?",
+      validate: function(value) {
+        if (isNaN(value) === false) {
+          return true;
+        }
+        return false;
+      }
+    }]).then(function(answer) {
+      console.log(answer);
+      inquirer.prompt([{
+        name: "quantity_choice",
         type: "input",
-        message: "Which item would you like to purchase?"
-      }]).then(function(answer) {
-        console.log(answer)
-        inquirer.prompt([{
-          name: "quantity_choice",
-          type: "input",
-          message: "How many would you like to purchase?"
-        }]);
-      });
+        message: "How many would you like to purchase?",
+        validate: function(value) {
+          if (isNaN(value) === false) {
+            return true;
+          }
+          return false;
+        }
+      }]);
+    });
   });
 } // end display function
