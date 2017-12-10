@@ -78,17 +78,21 @@ function display() {
         // console.log("chosen quantity: ", chosenQuantity);
         // console.log("store quantity: ", storeQuantity);
         if (chosenQuantity > storeQuantity) {
-          console.log("oops, not enough");
+          console.log("oops, not enough in stock.");
+          inquirer.prompt([{
+            name: "restart",
+            type: "confirm",
+            message: "Would you like to begin again?",
+            default: "yes"
+          }]).then(function(answer) {
+            if (answer.restart === true) {
+              display();
+            } else {
+              console.log("Thanks for shopping with us at Bamazon");
+            }
+          });
         }
       });
     });
   });
 } // end display function
-
-// if (answer.item_choice > results[i].quantity) {
-//   console.log("We don't have enough!");
-
-//start function checkQuantity to check if store has sufficient quantitiy for user.
-// function checkQuantity() {
-//
-// }
