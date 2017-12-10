@@ -2,6 +2,10 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
+var item;
+var price;
+var id;
+
 //sql login info
 var connectObject = {
   host: "localhost",
@@ -31,7 +35,12 @@ function display() {
   connection.query("SELECT item_id, product_name, price FROM products", function(err, results) {
     if (err) throw err;
 
-    console.log(results);
+    id = results[0].item_id;
+    item = results[0].product_name;
+    price = results[0].price;
+
+    console.log("id:" + id + ",", item, "$" + price);
+
 
     // once you have the items, prompt the user for which they'd like to bid on
     inquirer.prompt([{
