@@ -23,12 +23,10 @@ connection.connect(function(error) {
 
   if (error) {
     throw error;
-
   }
   display(); //run display function on startup
 
   console.log(`Connect as ID: ${connection.threadId}`);
-
 });
 
 //function to display all items in store
@@ -88,7 +86,7 @@ function display() {
             if (answer.restart === true) {
               display();
             } else {
-              console.log("Thanks for shopping with us at Bamazon");
+              console.log("Thanks for shopping with us at Bamazon!");
             }
           });
         }
