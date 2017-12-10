@@ -35,11 +35,15 @@ function display() {
   connection.query("SELECT item_id, product_name, price FROM products", function(err, results) {
     if (err) throw err;
 
-    id = results[0].item_id;
-    item = results[0].product_name;
-    price = results[0].price;
+    for (var i = 0; i < results.length; i++) {
+      id = results[i].item_id;
+      item = results[i].product_name;
+      price = results[i].price;
 
-    console.log("id:" + id + ",", item, "$" + price);
+      console.log("id:" + id + ",", item, "$" + price);
+    }
+
+
 
 
     // once you have the items, prompt the user for which they'd like to bid on
