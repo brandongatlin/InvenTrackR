@@ -30,6 +30,9 @@ function display() {
 
   connection.query("SELECT item_id, product_name, price FROM products", function(err, results) {
     if (err) throw err;
+
+    console.log(results);
+
     // once you have the items, prompt the user for which they'd like to bid on
     // inquirer
     //   .prompt([{
