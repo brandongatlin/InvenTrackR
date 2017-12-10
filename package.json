@@ -1,0 +1,23 @@
+{
+  "name": "bamazon.com",
+  "version": "1.0.0",
+  "description": "amazon ripoff app in node, using mysql",
+  "main": "bamazon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandongatlin/bamazon.com.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brandongatlin/bamazon.com/issues"
+  },
+  "homepage": "https://github.com/brandongatlin/bamazon.com#readme",
+  "dependencies": {
+    "inquirer": "^4.0.1",
+    "mysql": "^2.15.0"
+  }
+}
