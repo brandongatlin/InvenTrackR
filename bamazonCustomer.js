@@ -60,6 +60,21 @@ function display() {
       }
     }]).then(function(answer) {
       // console.log(answer);
+
+      for (var i = 0; i < results.length; i++) {
+
+        if (answer.item_choice == results[i].item_id) {
+          price = results[i].price;
+          stockQuantity = results[i].stock_quantity;
+        }
+      }
+
+      var currentId = answer.item_choice;
+
+      console.log("stockQuantity:", stockQuantity)
+      console.log("price:", price);
+
+
       inquirer.prompt([{
         name: "quantity_choice",
         type: "input",
@@ -72,7 +87,7 @@ function display() {
         } //end if statement
       }]).then(function(answer) {
         // console.log(answer);
-        chosenQuantity = answer.quantity_choice;
+        chosenQuantity = parseInt(answer.quantity_choice);
         console.log(item);
 
         // console.log("chosen quantity: ", chosenQuantity);
@@ -96,7 +111,7 @@ function display() {
         } else {
           console.log('yep, we got enough!');
           //subtract quantity from stock & add up total
-          //updateQuantity();
+          updateQuantity(stockQuantity - chosenQuantity, currentId);
           // console.log("Your total is: $" + x);
 
         }
@@ -106,9 +121,13 @@ function display() {
 } // end display function
 
 //update function
-function updateQuantity() {
+function updateQuantity(quantity, id) {
 
-  connection.query("UPDATE products SET stockQuantity WHERE", function(err, results) {
+  connection.query("UPDATE products SET ? WHERE ?", [{
+    "stock_quantity": quantity
+  }, {
+    "item_id": id
+  }], function(err, results) {
     if (err) throw err;
   });
 
