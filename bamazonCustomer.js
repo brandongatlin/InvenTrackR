@@ -2,11 +2,27 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
+var Table = require('cli-table');
+
+// instantiate
+var table = new Table({
+  head: ['TH 1 label', 'TH 2 label'],
+  colWidths: [100, 200]
+});
+
+// table is an Array, so you can `push`, `unshift`, `splice` and friends
+table.push(
+  ['First value', 'Second value'], ['First value', 'Second value']
+);
+
+console.log(table.toString());
+
 var item;
 var price;
 var id;
 var stockQuantity;
 var chosenQuantity;
+var total = (price * chosenQuantity);
 
 //sql login info
 var connectObject = {
@@ -40,9 +56,8 @@ function display() {
       item = results[i].product_name;
       price = results[i].price;
       stockQuantity = results[i].stock_quantity;
-      //when a user makes a selects a quantity, the program always compares to stock from the last item in teh loop, item 10. Therefore I need to find a way to compare to the exact item chosen?
 
-      console.log("loop stockQuantity: ", stockQuantity);
+      // console.log("loop stockQuantity: ", stockQuantity);
 
       console.log("id:" + id + ",", item, "$" + price, "in stock: " + stockQuantity);
     }
@@ -64,6 +79,7 @@ function display() {
       for (var i = 0; i < results.length; i++) {
 
         if (answer.item_choice == results[i].item_id) {
+          item = results[i].product_name;
           price = results[i].price;
           stockQuantity = results[i].stock_quantity;
         }
@@ -71,7 +87,8 @@ function display() {
 
       var currentId = answer.item_choice;
 
-      console.log("stockQuantity:", stockQuantity)
+      console.log(item);
+      console.log("# in Stock:", stockQuantity);
       console.log("price:", price);
 
 
@@ -88,7 +105,6 @@ function display() {
       }]).then(function(answer) {
         // console.log(answer);
         chosenQuantity = parseInt(answer.quantity_choice);
-        console.log(item);
 
         // console.log("chosen quantity: ", chosenQuantity);
         // console.log("store quantity: ", stockQuantity);
@@ -112,7 +128,23 @@ function display() {
           console.log('yep, we got enough!');
           //subtract quantity from stock & add up total
           updateQuantity(stockQuantity - chosenQuantity, currentId);
-          // console.log("Your total is: $" + x);
+
+          total = (price * chosenQuantity);
+
+          console.log("Your total is: $" + total);
+
+          inquirer.prompt([{
+            name: "restart",
+            type: "confirm",
+            message: "Would you like to begin again?",
+            default: "yes"
+          }]).then(function(answer) {
+            if (answer.restart === true) {
+              display();
+            } else {
+              console.log("Thanks for shopping with us at Bamazon!");
+            }
+          });
 
         }
       });
