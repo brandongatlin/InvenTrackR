@@ -2,20 +2,21 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
-var Table = require('cli-table');
+// var Table = require('cli-table');
 
 // instantiate
-var table = new Table({
-  head: ['TH 1 label', 'TH 2 label'],
-  colWidths: [100, 200]
-});
-
-// table is an Array, so you can `push`, `unshift`, `splice` and friends
-table.push(
-  ['First value', 'Second value'], ['First value', 'Second value']
-);
-
-console.log(table.toString());
+// var table = new Table({
+//   head: ['ID', 'Product', 'Department', 'Price', 'In Stock'],
+//   colWidths: [100, 200, 200, 100, 100]
+// });
+//
+// // table is an Array, so you can `push`, `unshift`, `splice`
+// // and friends
+// table.push(
+//   ['id', 'id'], ['First value', 'Second value']
+// );
+//
+// console.log(table.toString());
 
 var item;
 var price;
@@ -56,6 +57,8 @@ function display() {
       item = results[i].product_name;
       price = results[i].price;
       stockQuantity = results[i].stock_quantity;
+
+
 
       // console.log("loop stockQuantity: ", stockQuantity);
 
