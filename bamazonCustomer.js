@@ -2,22 +2,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
-// var Table = require('cli-table');
-
-// instantiate
-// var table = new Table({
-//   head: ['ID', 'Product', 'Department', 'Price', 'In Stock'],
-//   colWidths: [100, 200, 200, 100, 100]
-// });
-//
-// // table is an Array, so you can `push`, `unshift`, `splice`
-// // and friends
-// table.push(
-//   ['id', 'id'], ['First value', 'Second value']
-// );
-//
-// console.log(table.toString());
-
 var item;
 var price;
 var id;
@@ -58,14 +42,10 @@ function display() {
       price = results[i].price;
       stockQuantity = results[i].stock_quantity;
 
-
-
-      // console.log("loop stockQuantity: ", stockQuantity);
-
       console.log("id:" + id + ",", item, "$" + price, "in stock: " + stockQuantity);
     }
 
-    // once you have the items, prompt the user for which they'd like to bid on
+    // once you have the items, prompt the user for which they'd like to buy
     inquirer.prompt([{
       name: "item_choice",
       type: "input",
@@ -94,7 +74,6 @@ function display() {
       console.log("# in Stock:", stockQuantity);
       console.log("price:", price);
 
-
       inquirer.prompt([{
         name: "quantity_choice",
         type: "input",
@@ -109,8 +88,6 @@ function display() {
         // console.log(answer);
         chosenQuantity = parseInt(answer.quantity_choice);
 
-        // console.log("chosen quantity: ", chosenQuantity);
-        // console.log("store quantity: ", stockQuantity);
         if (chosenQuantity > stockQuantity) {
           console.log("oops, not enough in stock.");
           console.log("id:" + id + ",", item, "$" + price, "in stock: " + stockQuantity);
@@ -148,7 +125,6 @@ function display() {
               console.log("Thanks for shopping with us at Bamazon!");
             }
           });
-
         }
       });
     });
@@ -165,5 +141,4 @@ function updateQuantity(quantity, id) {
   }], function(err, results) {
     if (err) throw err;
   });
-
-}
+} //end update function
